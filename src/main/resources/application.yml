@@ -1,0 +1,18 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://icecreambox-db.c87dxbrmlki4.ap-northeast-2.rds.amazonaws.com:3306/iceCreamBox?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
+    username: admin
+    password: ADMIN123!
+  sql:
+    init:
+      platform: mysql
+
+  jpa:
+    hibernate:
+      ddl-auto: create
+    generate-ddl: true
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
