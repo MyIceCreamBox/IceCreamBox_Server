@@ -18,9 +18,8 @@ bin/
 !**/src/test/**/bin/
 
 ### IntelliJ IDEA ###
-resources/application.yml
-.idea
 *.yml
+.idea
 *.iws
 *.iml
 *.ipr
