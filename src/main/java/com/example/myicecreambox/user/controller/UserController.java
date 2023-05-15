@@ -60,6 +60,4 @@ public class UserController {
   public ResponseCustom<?> testController() {
     return ResponseCustom.OK("test");
   }
-
-
 }
