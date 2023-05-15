@@ -53,4 +53,11 @@ public class UserController {
   public ResponseCustom<?> checkEmail(@RequestBody PostEmailReq postEmailReq) {
     return ResponseCustom.OK(userService.checkEmail(postEmailReq));
   }
+
+  // test controller
+  @ResponseBody
+  @GetMapping("/test")
+  public ResponseCustom<?> testController() {
+    return ResponseCustom.OK("test");
+  }
 }
