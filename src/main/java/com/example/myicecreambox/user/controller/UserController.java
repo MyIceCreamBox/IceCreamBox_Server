@@ -58,6 +58,7 @@ public class UserController {
   @ResponseBody
   @GetMapping("/test")
   public ResponseCustom<?> testController() {
+    System.out.println("test");
     return ResponseCustom.OK("test");
   }
 }
