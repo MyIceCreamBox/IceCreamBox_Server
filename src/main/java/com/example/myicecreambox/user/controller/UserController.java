@@ -5,6 +5,7 @@ import com.example.myicecreambox.global.resolver.Auth;
 import com.example.myicecreambox.global.resolver.IsLogin;
 import com.example.myicecreambox.global.resolver.LoginStatus;
 import com.example.myicecreambox.user.dto.Request.*;
+import com.example.myicecreambox.user.dto.Response.IceCreamBoxRes;
 import com.example.myicecreambox.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -53,6 +54,13 @@ public class UserController {
   public ResponseCustom<?> checkEmail(@RequestBody PostEmailReq postEmailReq) {
     return ResponseCustom.OK(userService.checkEmail(postEmailReq));
   }
+
+  @Auth
+  @GetMapping("/my-page")
+  public ResponseCustom<IceCreamBoxRes> getMyIceCreamBox(@IsLogin LoginStatus loginStatus) {
+    return ResponseCustom.OK(userService.getMyIceCreamBox(loginStatus.getUserIdx()));
+  }
+
 
   // test controller
   @ResponseBody

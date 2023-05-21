@@ -1,6 +1,12 @@
 package com.example.myicecreambox.user.service;
 
+import com.example.myicecreambox.gift.entity.Gift;
+import com.example.myicecreambox.gift.entity.GiftType;
+import com.example.myicecreambox.gift.entity.UserGift;
+import com.example.myicecreambox.gift.repository.GiftRepository;
+import com.example.myicecreambox.gift.repository.UserGiftRepository;
 import com.example.myicecreambox.global.utils.TokenUtils;
+import com.example.myicecreambox.user.dto.Response.IceCreamBoxRes;
 import com.example.myicecreambox.user.dto.Response.PostEmailRes;
 import com.example.myicecreambox.user.dto.Request.*;
 import com.example.myicecreambox.user.dto.Response.PostNickNameRes;
@@ -14,11 +20,16 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
 
   private final UserRepository userRepository;
+  private final UserGiftRepository userGiftRepository;
+  private final GiftRepository giftRepository;
   private final UserAssembler userAssembler;
   private final TokenUtils tokenUtils;
 
@@ -39,6 +50,7 @@ public class UserServiceImpl implements UserService {
   }
 
   @Override
+  @Transactional
   public PostUserRes login(LoginUserReq loginUserReq) {
     User user = checkUserInfo(loginUserReq.getEmail(), loginUserReq.getPw());
     if (user.getIsEnable().equals(false)) throw new AlreadyWithdrawUserException();
@@ -53,6 +65,7 @@ public class UserServiceImpl implements UserService {
   }
 
   @Override
+  @Transactional
   public void deleteUser(Long userIdx) {
     User user = userRepository.findByUserIdxAndIsEnable(userIdx, true).orElseThrow(UserNotFoundException::new);
     userRepository.delete(user);
@@ -81,5 +94,12 @@ public class UserServiceImpl implements UserService {
 
   }
 
+  @Override
+  public IceCreamBoxRes getMyIceCreamBox(Long userIdx) {
+    User user = userRepository.findByUserIdxAndIsEnable(userIdx, true).orElseThrow(UserNotFoundException::new);
+    List<UserGift> userGifts = userGiftRepository.findByUserAndGiftType(user, GiftType.RECEIVED);
+    List<Gift> receivedGifts = userGifts.stream().map(m -> giftRepository.findByGiftIdxAndIsEnable(m.getGift().getGiftIdx(), true)).toList();
+    return IceCreamBoxRes.toDto(receivedGifts);
+  }
 
 }

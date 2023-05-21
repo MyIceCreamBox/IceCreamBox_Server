@@ -21,4 +21,7 @@ public class UserGift extends BaseEntity {
   @ManyToOne(fetch = FetchType.LAZY, optional = false)
   @JoinColumn(name="giftIdx")
   private Gift gift;
+
+  private GiftType giftType;
+  private String senderNickname;
 }

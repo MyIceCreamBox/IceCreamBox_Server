@@ -1,5 +1,6 @@
 package com.example.myicecreambox.user.service;
 
+import com.example.myicecreambox.user.dto.Response.IceCreamBoxRes;
 import com.example.myicecreambox.user.dto.Response.PostEmailRes;
 import com.example.myicecreambox.user.dto.Request.PostEmailReq;
 import com.example.myicecreambox.user.dto.Request.LoginUserReq;
@@ -20,4 +21,6 @@ public interface UserService {
   void logout(Long userIdx);
 
   PostEmailRes checkEmail(PostEmailReq postEmailReq);
+
+  IceCreamBoxRes getMyIceCreamBox(Long userIdx);
 }
