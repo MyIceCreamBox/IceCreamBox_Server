@@ -1,4 +1,4 @@
-package com.example.myicecreambox.gift.dto;
+package com.example.myicecreambox.gift.dto.request;
 
 import lombok.Getter;
 
