@@ -1,4 +1,4 @@
-package com.example.myicecreambox.gift.dto;
+package com.example.myicecreambox.gift.dto.response;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
