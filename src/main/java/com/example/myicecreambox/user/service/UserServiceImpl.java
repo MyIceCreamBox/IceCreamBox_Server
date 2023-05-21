@@ -62,7 +62,7 @@ public class UserServiceImpl implements UserService {
     if (!StringUtils.hasText(email)) throw new UserEmailMissingValueException();
     if (!StringUtils.hasText(pw)) throw new UserPwMissingValueException();
 
-    return userRepository.findByEmailAndPw(email, pw);
+    return userRepository.findByEmailAndPwAndIsEnable(email, pw, true);
   }
 
   @Override
