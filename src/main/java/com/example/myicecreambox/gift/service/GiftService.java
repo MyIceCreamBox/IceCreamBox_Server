@@ -5,7 +5,7 @@ import com.example.myicecreambox.gift.dto.request.SendGiftReq;
 import com.example.myicecreambox.gift.dto.response.SendGiftRes;
 
 public interface GiftService {
-  SendGiftRes sendGift(SendGiftReq sendGiftReq, Long userIdx);
+  SendGiftRes sendGift(SendGiftReq sendGiftReq, Long userIdx, Long ReceiverIdx);
 
   Long getMyGiftCount(Long userIdx);
 
