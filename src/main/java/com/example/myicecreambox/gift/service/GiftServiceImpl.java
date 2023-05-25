@@ -24,7 +24,7 @@ public class GiftServiceImpl implements GiftService {
   @Override
   @Transactional
   public SendGiftRes sendGift(SendGiftReq sendGiftReq, Long userIdx, Long receiverIdx) {
-    // Gift 객체를 생성, 안에 들어갈 속성값 message, imgKey
+    // Gift 객체를 생성 , 안에 들어갈 속성값 message, imgKey
     Gift gift = new Gift();
     gift.toDto(sendGiftReq.getMessage(), sendGiftReq.getIceCreamImgKey());
     Gift savedGift = giftRepository.save(gift);
