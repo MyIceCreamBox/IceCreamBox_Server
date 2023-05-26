@@ -1,4 +1,4 @@
-package com.example.myicecreambox.gift.dto.response;
+package com.example.myicecreambox.user.entity.response;
 
 import lombok.Data;
 

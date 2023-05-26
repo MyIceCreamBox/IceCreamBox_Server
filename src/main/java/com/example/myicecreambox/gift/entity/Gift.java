@@ -1,9 +1,7 @@
 package com.example.myicecreambox.gift.entity;
 
 import com.example.myicecreambox.global.entity.BaseEntity;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,8 +10,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Getter
 public class Gift extends BaseEntity {
-  @Id
-  @Column(name = "giftIdx", nullable = false)
+
+  @Id @GeneratedValue(strategy = GenerationType.AUTO)
+  @Column(nullable = false)
   private Long giftIdx;
 
   private String message;
@@ -24,14 +23,4 @@ public class Gift extends BaseEntity {
     this.message = message;
     this.iceCreamImgKey = iceCreamImgKey;
   }
-
-  public static Gift toDto(String message, String iceCreamImgKey) {
-    return Gift.builder()
-            .message(message)
-            .iceCreamImgKey(iceCreamImgKey)
-            .build();
-
-  }
-
-
 }

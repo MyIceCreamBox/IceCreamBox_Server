@@ -11,8 +11,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Getter
 public class UserGift extends BaseEntity {
-  @Id
-  @Column(name = "userGiftIdx", nullable = false)
+
+  @Id @GeneratedValue(strategy = GenerationType.AUTO)
+  @Column(nullable = false)
   private Long userGiftIdx;
 
   @ManyToOne(fetch = FetchType.LAZY, optional = false)
@@ -22,22 +23,29 @@ public class UserGift extends BaseEntity {
   @ManyToOne(fetch = FetchType.LAZY, optional = false)
   @JoinColumn(name="giftIdx")
   private Gift gift;
+
+  @Enumerated(EnumType.STRING)
+  @Column(nullable = false)
   private GiftType giftType;
+
+  private String message;
   private String senderNickname;
 
   @Builder
-  public UserGift(User user, GiftType giftType, Gift gift, String senderNickname) {
+  public UserGift(User user, GiftType giftType, Gift gift, String message, String senderNickname) {
     this.user = user;
     this.giftType = giftType;
     this.gift = gift;
+    this.message = message;
     this.senderNickname = senderNickname;
   }
 
-  public static UserGift toDto(User user, GiftType giftType, Gift gift, String senderNickname) {
+  public static UserGift toEntity(User user, GiftType giftType, Gift gift, String senderNickname) {
     return UserGift.builder()
             .user(user)
-            .giftType(giftType)
             .gift(gift)
+            .giftType(giftType)
+            .message(gift.getMessage())
             .senderNickname(senderNickname)
             .build();
 
