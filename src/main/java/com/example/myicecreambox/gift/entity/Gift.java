@@ -4,6 +4,7 @@ import com.example.myicecreambox.global.entity.BaseEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -17,6 +18,20 @@ public class Gift extends BaseEntity {
 
   private String message;
   private String iceCreamImgKey;
+
+  @Builder
+  public Gift(String message, String iceCreamImgKey) {
+    this.message = message;
+    this.iceCreamImgKey = iceCreamImgKey;
+  }
+
+  public static Gift toDto(String message, String iceCreamImgKey) {
+    return Gift.builder()
+            .message(message)
+            .iceCreamImgKey(iceCreamImgKey)
+            .build();
+
+  }
 
 
 }

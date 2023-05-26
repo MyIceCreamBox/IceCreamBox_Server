@@ -20,10 +20,11 @@ public class GiftController {
   private final GiftService giftService;
 
   @Auth
-  @PostMapping("/send")
+  @PostMapping("/send/{receiverIdx}")
   public ResponseCustom<SendGiftRes> sendGift(@RequestBody SendGiftReq sendGiftReq,
+                                              @PathVariable(name = "receiverIdx") Long receiverIdx,
                                               @IsLogin LoginStatus loginStatus) {
-    return ResponseCustom.OK(giftService.sendGift(sendGiftReq, loginStatus.getUserIdx()));
+    return ResponseCustom.OK(giftService.sendGift(sendGiftReq, loginStatus.getUserIdx(), receiverIdx)); //receiver 추가
   }
 
   @Auth
