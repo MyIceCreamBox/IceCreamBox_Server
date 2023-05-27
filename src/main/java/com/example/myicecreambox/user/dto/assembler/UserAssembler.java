@@ -12,10 +12,10 @@ import java.util.regex.Pattern;
 @RequiredArgsConstructor
 public class UserAssembler {
 
-  public User toEntity(PostUserReq postUserReq) {
+  public User toEntity(PostUserReq postUserReq, String pw) {
     return User.builder()
             .email(postUserReq.getEmail())
-            .pw(postUserReq.getPw())
+            .pw(pw)
             .nickname(postUserReq.getNickname())
             .build();
   }
