@@ -16,12 +16,12 @@ import com.example.myicecreambox.user.entity.User;
 import com.example.myicecreambox.user.exception.*;
 import com.example.myicecreambox.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -30,29 +30,28 @@ public class UserServiceImpl implements UserService {
   private final UserRepository userRepository;
   private final UserGiftRepository userGiftRepository;
   private final GiftRepository giftRepository;
+  private final BCryptPasswordEncoder pwEncoder;
   private final UserAssembler userAssembler;
   private final TokenUtils tokenUtils;
 
   @Override
   @Transactional
   public PostUserRes join(PostUserReq postUserReq) {
-    User user = checkUserInfo(postUserReq.getEmail(), postUserReq.getPw());
-    if (user == null) {
-      user = saveUser(postUserReq);
-    }
+    checkUserInfo(postUserReq.getEmail(), postUserReq.getPw());
+    if(!StringUtils.hasText(postUserReq.getNickname())) throw new InvalidUserNickNameException();
+
+    if(userRepository.findByEmail(postUserReq.getEmail()).isPresent()) throw new AlreadyExistEmailException();
+    User user = userRepository.save(userAssembler.toEntity(postUserReq, pwEncoder.encode(postUserReq.getPw())));
     user.login();
     return PostUserRes.toDto(tokenUtils.createToken(user));
-  }
-
-  private User saveUser(PostUserReq postUserReq) {
-    return userRepository.save(userAssembler.toEntity(postUserReq));
-
   }
 
   @Override
   @Transactional
   public PostUserRes login(LoginUserReq loginUserReq) {
-    User user = checkUserInfo(loginUserReq.getEmail(), loginUserReq.getPw());
+    checkUserInfo(loginUserReq.getEmail(), loginUserReq.getPw());
+    User user = userRepository.findByEmail(loginUserReq.getEmail()).orElseThrow(InvalidLoginRequestException::new);
+    if(!pwEncoder.matches(loginUserReq.getPw(), user.getPw())) throw new PasswordNotMatchException();
     if (user.getIsEnable().equals(false)) throw new AlreadyWithdrawUserException();
     user.login();
     return PostUserRes.toDto(tokenUtils.createToken(user));
@@ -64,18 +63,17 @@ public class UserServiceImpl implements UserService {
     user.logout();
   }
 
+  public void checkUserInfo(String email, String password) {
+    if (!StringUtils.hasText(email)) throw new UserEmailMissingValueException();
+    if (!StringUtils.hasText(password)) throw new UserPwMissingValueException();
+  }
+
+
   @Override
   @Transactional
   public void deleteUser(Long userIdx) {
     User user = userRepository.findByUserIdxAndIsEnable(userIdx, true).orElseThrow(UserNotFoundException::new);
     userRepository.delete(user);
-  }
-
-  public User checkUserInfo(String email, String pw) {
-    if (!StringUtils.hasText(email)) throw new UserEmailMissingValueException();
-    if (!StringUtils.hasText(pw)) throw new UserPwMissingValueException();
-
-    return userRepository.findByEmailAndPwAndIsEnable(email, pw, true);
   }
 
   @Override
@@ -88,10 +86,9 @@ public class UserServiceImpl implements UserService {
 
   @Override
   public PostEmailRes checkEmail(PostEmailReq postEmailReq) {
-    if(!userAssembler.isValidEmail(postEmailReq.getEmail())) throw new InvalidUserEmailException();
+    if (!userAssembler.isValidEmail(postEmailReq.getEmail())) throw new InvalidUserEmailException();
     Boolean existence = userRepository.existsByEmail(postEmailReq.getEmail());
     return PostEmailRes.toDto(postEmailReq.getEmail(), existence);
-
   }
 
   @Override

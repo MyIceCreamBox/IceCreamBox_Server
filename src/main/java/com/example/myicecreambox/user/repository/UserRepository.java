@@ -10,9 +10,11 @@ import java.util.Optional;
 public interface UserRepository extends JpaRepository<User, Long> {
   Optional<User> findByUserIdxAndIsEnable(Long userIdx, Boolean isEnable);
 
-  User findByEmailAndPwAndIsEnable(String email, String pw, Boolean isEnable);
+  Optional<User> findByEmailAndPw(String email, String pw);
 
   Boolean existsByNickname(String nickName);
 
   Boolean existsByEmail(String email);
+
+  Optional<User> findByEmail(String email);
 }
