@@ -2,6 +2,7 @@ package com.example.myicecreambox.gift.service;
 
 import com.example.myicecreambox.gift.dto.assembler.GiftAssembler;
 import com.example.myicecreambox.gift.dto.request.SendGiftReq;
+import com.example.myicecreambox.gift.exception.NotEnoughGiftChanceException;
 import com.example.myicecreambox.user.entity.response.GetIceCreamRateRes;
 import com.example.myicecreambox.gift.entity.Gift;
 import com.example.myicecreambox.gift.entity.GiftType;
@@ -35,11 +36,14 @@ public class GiftServiceImpl implements GiftService {
     User sender = userRepository.findByUserIdxAndIsEnable(userIdx, true).orElseThrow(UserNotFoundException::new);
     User receiver = userRepository.findByUserIdxAndIsEnable(receiverIdx, true).orElseThrow(UserNotFoundException::new);
 
+    if(sender.getGiftChance() <= 0) throw new NotEnoughGiftChanceException();
+
     Gift gift = new Gift();
     if (this.checkGiftInfo(sendGiftReq)) {
       gift = giftRepository.save(giftAssembler.toEntity(sendGiftReq.getMessage(), sendGiftReq.getIceCreamImgKey()));
       userGiftRepository.save(UserGift.toEntity(sender, GiftType.SEND, gift, sendGiftReq.getSenderNickname()));
       userGiftRepository.save(UserGift.toEntity(receiver, GiftType.RECEIVED, gift, sendGiftReq.getSenderNickname()));
+      giftAssembler.toUpdateGiftChance(sender, receiver);
     }
     return gift.getGiftIdx();
   }
@@ -62,5 +66,11 @@ public class GiftServiceImpl implements GiftService {
   @Override
   public GetIceCreamRateRes getMyIceCreamRate(Long userIdx) {
     return null;
+  }
+
+  @Override
+  public Integer getMyGiftChance(Long userIdx) {
+    User user = userRepository.findByUserIdxAndIsEnable(userIdx, true).orElseThrow(UserNotFoundException::new);
+    return user.getGiftChance();
   }
 }
