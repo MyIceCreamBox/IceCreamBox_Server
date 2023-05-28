@@ -8,6 +8,8 @@ import com.example.myicecreambox.global.resolver.Auth;
 import com.example.myicecreambox.global.resolver.IsLogin;
 import com.example.myicecreambox.global.resolver.LoginStatus;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.java.Log;
+import org.apache.coyote.Response;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -35,5 +37,11 @@ public class GiftController {
   @GetMapping("/rate/icecream")
   public ResponseCustom<GetIceCreamRateRes> getMyIceCreamRate(@IsLogin LoginStatus loginStatus) {
     return ResponseCustom.OK(giftService.getMyIceCreamRate(loginStatus.getUserIdx()));
+  }
+
+  @Auth
+  @GetMapping("/chance")
+  public ResponseCustom<Integer> getMyGiftChance(@IsLogin LoginStatus loginStatus) {
+    return ResponseCustom.OK(giftService.getMyGiftChance(loginStatus.getUserIdx()));
   }
 }

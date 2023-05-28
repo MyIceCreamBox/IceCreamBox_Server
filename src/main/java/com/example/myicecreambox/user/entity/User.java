@@ -3,6 +3,7 @@ package com.example.myicecreambox.user.entity;
 import com.example.myicecreambox.global.entity.BaseEntity;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.ColumnDefault;
 
 @Entity
 @NoArgsConstructor
@@ -16,6 +17,9 @@ public class User extends BaseEntity {
   @Setter
   @Column(nullable = false, columnDefinition = "BOOLEAN DEFAULT false")
   private Boolean isDenied = false;
+
+  @ColumnDefault("5") //default 0
+  private Integer giftChance;
 
   private String nickname;
   private String email;
@@ -35,5 +39,13 @@ public class User extends BaseEntity {
 
   public void logout() {
     this.loginStatus = false;
+  }
+
+  public void decreaseGiftChance(Integer giftChance) {
+    this.giftChance = giftChance - 1;
+  }
+
+  public void increaseGiftChance(Integer giftChance) {
+    this.giftChance = giftChance + 1;
   }
 }

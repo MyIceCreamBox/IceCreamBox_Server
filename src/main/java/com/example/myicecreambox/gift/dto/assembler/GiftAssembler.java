@@ -19,4 +19,9 @@ public class GiftAssembler {
 
     return null;
   }
+
+  public void toUpdateGiftChance(User sender, User receiver) {
+    sender.decreaseGiftChance(sender.getGiftChance());
+    receiver.increaseGiftChance(receiver.getGiftChance());
+  }
 }

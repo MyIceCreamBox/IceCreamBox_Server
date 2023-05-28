@@ -9,4 +9,6 @@ public interface GiftService {
   Integer getMyGiftCount(Long userIdx);
 
   GetIceCreamRateRes getMyIceCreamRate(Long userIdx);
+
+  Integer getMyGiftChance(Long userIdx);
 }
