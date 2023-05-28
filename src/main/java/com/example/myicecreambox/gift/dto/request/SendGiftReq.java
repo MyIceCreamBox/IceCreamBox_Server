@@ -6,7 +6,7 @@ import lombok.NoArgsConstructor;
 
 @Getter
 public class SendGiftReq {
-  private String iceCreamImgKey;
+  private String iceCreamName;
   private String senderNickname;
   private String message;
 }

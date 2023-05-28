@@ -19,11 +19,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
-
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -44,20 +40,13 @@ public class GiftServiceImpl implements GiftService {
     if(sender.getGiftChance() <= 0) throw new NotEnoughGiftChanceException();
 
     Gift gift = new Gift();
-    if (this.checkGiftInfo(sendGiftReq)) {
-      gift = giftRepository.save(giftAssembler.toEntity(sendGiftReq.getMessage(), sendGiftReq.getIceCreamImgKey()));
+    if (giftAssembler.checkGiftInfo(sendGiftReq)) {
+      gift = giftRepository.save(giftAssembler.toEntity(sendGiftReq.getMessage(), sendGiftReq.getIceCreamName()));
       userGiftRepository.save(UserGift.toEntity(sender, GiftType.SEND, gift, sendGiftReq.getSenderNickname()));
       userGiftRepository.save(UserGift.toEntity(receiver, GiftType.RECEIVED, gift, sendGiftReq.getSenderNickname()));
       giftAssembler.toUpdateGiftChance(sender, receiver);
     }
     return gift.getGiftIdx();
-  }
-
-  private Boolean checkGiftInfo(SendGiftReq sendGiftReq) {
-    if (!StringUtils.hasText(sendGiftReq.getMessage())) throw new GiftMessageMissingValueException();
-    if (!StringUtils.hasText(sendGiftReq.getIceCreamImgKey())) throw new GiftIceCreamKeyMissingValueException();
-    if (!StringUtils.hasText(sendGiftReq.getSenderNickname())) throw new GiftSenderNicknameMissingValueException();
-    return true;
   }
 
   // 받은 gift 개수 조회
@@ -73,11 +62,11 @@ public class GiftServiceImpl implements GiftService {
     User user = userRepository.findByUserIdxAndIsEnable(userIdx, true).orElseThrow(UserNotFoundException::new);
     List<UserGift> userGifts = userGiftRepository.findByUserAndGiftType(user, GiftType.RECEIVED);
     List<Gift> receivedGifts = userGifts.stream().map(m -> giftRepository.findByGiftIdxAndIsEnable(m.getGift().getGiftIdx(), true)).toList();
-    Map<Gift, Long> giftStatusList = new HashMap<>();
 
     return giftAssembler.toGiftStatisticsByIceCreamStatus(receivedGifts);
   }
 
+  // 보낼 수 있는 기회 횟수 조회
   @Override
   public Integer getMyGiftChance(Long userIdx) {
     User user = userRepository.findByUserIdxAndIsEnable(userIdx, true).orElseThrow(UserNotFoundException::new);
