@@ -3,7 +3,7 @@ package com.example.myicecreambox.gift.service;
 import com.example.myicecreambox.gift.dto.assembler.GiftAssembler;
 import com.example.myicecreambox.gift.dto.request.SendGiftReq;
 import com.example.myicecreambox.gift.exception.NotEnoughGiftChanceException;
-import com.example.myicecreambox.user.entity.response.GetIceCreamRateRes;
+import com.example.myicecreambox.gift.dto.response.GiftsStatisticsRes;
 import com.example.myicecreambox.gift.entity.Gift;
 import com.example.myicecreambox.gift.entity.GiftType;
 import com.example.myicecreambox.gift.entity.UserGift;
@@ -19,6 +19,11 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -64,8 +69,13 @@ public class GiftServiceImpl implements GiftService {
 
   // 아이스크림 종류 비율 조회
   @Override
-  public GetIceCreamRateRes getMyIceCreamRate(Long userIdx) {
-    return null;
+  public GiftsStatisticsRes getMyGiftStatistics(Long userIdx) {
+    User user = userRepository.findByUserIdxAndIsEnable(userIdx, true).orElseThrow(UserNotFoundException::new);
+    List<UserGift> userGifts = userGiftRepository.findByUserAndGiftType(user, GiftType.RECEIVED);
+    List<Gift> receivedGifts = userGifts.stream().map(m -> giftRepository.findByGiftIdxAndIsEnable(m.getGift().getGiftIdx(), true)).toList();
+    Map<Gift, Long> giftStatusList = new HashMap<>();
+
+    return giftAssembler.toGiftStatisticsByIceCreamStatus(receivedGifts);
   }
 
   @Override
