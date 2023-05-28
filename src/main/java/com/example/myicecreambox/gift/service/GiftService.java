@@ -1,6 +1,6 @@
 package com.example.myicecreambox.gift.service;
 
-import com.example.myicecreambox.user.entity.response.GetIceCreamRateRes;
+import com.example.myicecreambox.gift.dto.response.GiftsStatisticsRes;
 import com.example.myicecreambox.gift.dto.request.SendGiftReq;
 
 public interface GiftService {
@@ -8,7 +8,7 @@ public interface GiftService {
 
   Integer getMyGiftCount(Long userIdx);
 
-  GetIceCreamRateRes getMyIceCreamRate(Long userIdx);
+  GiftsStatisticsRes getMyGiftStatistics(Long userIdx);
 
   Integer getMyGiftChance(Long userIdx);
 }

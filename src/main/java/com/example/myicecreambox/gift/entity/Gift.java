@@ -16,11 +16,21 @@ public class Gift extends BaseEntity {
   private Long giftIdx;
 
   private String message;
-  private String iceCreamImgKey;
+//  private String iceCreamImgKey;
+
+  @Enumerated(EnumType.STRING)
+  @Column(nullable = false)
+  private GiftCategory giftCategory;
+
+//  @Builder
+//  public Gift(String message, String iceCreamImgKey) {
+//    this.message = message;
+//    this.iceCreamImgKey = iceCreamImgKey;
+//  }
 
   @Builder
-  public Gift(String message, String iceCreamImgKey) {
+  public Gift(String message, GiftCategory giftCategory) {
     this.message = message;
-    this.iceCreamImgKey = iceCreamImgKey;
+    this.giftCategory = giftCategory;
   }
 }

@@ -10,14 +10,14 @@ import lombok.NoArgsConstructor;
 public class ReceivedGiftRes {
   private Long giftIdx;
   private String message;
-  private String iceCreamImgUrl;
+  private String iceCreamName;
 
   public static ReceivedGiftRes toDto(Gift gift) {
     ReceivedGiftRes receivedGiftRes = new ReceivedGiftRes();
     receivedGiftRes.giftIdx = gift.getGiftIdx();
     receivedGiftRes.message = gift.getMessage();
     // todo ImgKey -> ImgUrl 변경 로직 필요
-    receivedGiftRes.iceCreamImgUrl = gift.getIceCreamImgKey();
+    receivedGiftRes.iceCreamName = gift.getGiftCategory().getName();
     return receivedGiftRes;
   }
 }

@@ -1,15 +1,13 @@
 package com.example.myicecreambox.gift.controller;
 
 import com.example.myicecreambox.gift.dto.request.SendGiftReq;
-import com.example.myicecreambox.user.entity.response.GetIceCreamRateRes;
+import com.example.myicecreambox.gift.dto.response.GiftsStatisticsRes;
 import com.example.myicecreambox.gift.service.GiftService;
 import com.example.myicecreambox.global.dto.ResponseCustom;
 import com.example.myicecreambox.global.resolver.Auth;
 import com.example.myicecreambox.global.resolver.IsLogin;
 import com.example.myicecreambox.global.resolver.LoginStatus;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.java.Log;
-import org.apache.coyote.Response;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -34,9 +32,9 @@ public class GiftController {
   }
 
   @Auth
-  @GetMapping("/rate/icecream")
-  public ResponseCustom<GetIceCreamRateRes> getMyIceCreamRate(@IsLogin LoginStatus loginStatus) {
-    return ResponseCustom.OK(giftService.getMyIceCreamRate(loginStatus.getUserIdx()));
+  @GetMapping("/statistics/gift-rate")
+  public ResponseCustom<GiftsStatisticsRes> getMyGiftStatistics(@IsLogin LoginStatus loginStatus) {
+    return ResponseCustom.OK(giftService.getMyGiftStatistics(loginStatus.getUserIdx()));
   }
 
   @Auth
