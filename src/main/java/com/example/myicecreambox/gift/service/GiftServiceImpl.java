@@ -41,9 +41,9 @@ public class GiftServiceImpl implements GiftService {
 
     Gift gift = new Gift();
     if (giftAssembler.checkGiftInfo(sendGiftReq)) {
-      gift = giftRepository.save(giftAssembler.toEntity(sendGiftReq.getMessage(), sendGiftReq.getIceCreamName()));
-      userGiftRepository.save(UserGift.toEntity(sender, GiftType.SEND, gift, sendGiftReq.getSenderNickname()));
-      userGiftRepository.save(UserGift.toEntity(receiver, GiftType.RECEIVED, gift, sendGiftReq.getSenderNickname()));
+      gift = giftRepository.save(giftAssembler.toEntity(sendGiftReq.getMessage(), sendGiftReq.getIceCreamName(), sendGiftReq.getSenderNickname()));
+      userGiftRepository.save(UserGift.toEntity(sender, GiftType.SEND, gift));
+      userGiftRepository.save(UserGift.toEntity(receiver, GiftType.RECEIVED, gift));
       giftAssembler.toUpdateGiftChance(sender, receiver);
     }
     return gift.getGiftIdx();

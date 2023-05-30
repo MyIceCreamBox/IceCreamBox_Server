@@ -20,13 +20,13 @@ import java.util.Map;
 
 @Component
 public class GiftAssembler {
-  public Gift toEntity(String message, String iceCreamName) {
-    return Gift.builder().message(message).giftCategory(GiftCategory.getGiftCategoryByName(iceCreamName)).build();
-  }
 
-  public List<UserGift> toUpdateAssociation(User sender, User receiver, Gift gift) {
-
-    return null;
+  public Gift toEntity(String message, String iceCreamName, String senderNickname) {
+    return Gift.builder()
+            .message(message)
+            .giftCategory(GiftCategory.getGiftCategoryByName(iceCreamName))
+            .senderNickname(senderNickname)
+            .build();
   }
 
   public void toUpdateGiftChance(User sender, User receiver) {

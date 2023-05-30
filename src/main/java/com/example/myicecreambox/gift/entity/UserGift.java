@@ -28,28 +28,19 @@ public class UserGift extends BaseEntity {
   @Column(nullable = false)
   private GiftType giftType;
 
-  private String message;
-  private String senderNickname;
-
   @Builder
-  public UserGift(User user, GiftType giftType, Gift gift, String message, String senderNickname) {
+  public UserGift(User user, GiftType giftType, Gift gift) {
     this.user = user;
     this.giftType = giftType;
     this.gift = gift;
-    this.message = message;
-    this.senderNickname = senderNickname;
   }
 
-  public static UserGift toEntity(User user, GiftType giftType, Gift gift, String senderNickname) {
+  public static UserGift toEntity(User user, GiftType giftType, Gift gift) {
     return UserGift.builder()
             .user(user)
             .gift(gift)
             .giftType(giftType)
-            .message(gift.getMessage())
-            .senderNickname(senderNickname)
             .build();
-
-
   }
 
 
