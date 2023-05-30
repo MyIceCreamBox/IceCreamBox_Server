@@ -12,11 +12,14 @@ import java.util.regex.Pattern;
 @RequiredArgsConstructor
 public class UserAssembler {
 
+  private static final Integer DEFAULT_GIFT_CHANCE_COUNT = 5;
+
   public User toEntity(PostUserReq postUserReq, String pw) {
     return User.builder()
             .email(postUserReq.getEmail())
             .pw(pw)
             .nickname(postUserReq.getNickname())
+            .giftChance(DEFAULT_GIFT_CHANCE_COUNT)
             .build();
   }
 

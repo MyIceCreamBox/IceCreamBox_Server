@@ -18,7 +18,6 @@ public class User extends BaseEntity {
   @Column(nullable = false, columnDefinition = "BOOLEAN DEFAULT false")
   private Boolean isDenied = false;
 
-  @ColumnDefault("5") //default 0
   private Integer giftChance;
 
   private String nickname;
@@ -27,10 +26,11 @@ public class User extends BaseEntity {
   private Boolean loginStatus;
 
   @Builder
-  public User(String nickname, String email, String pw) {
+  public User(String nickname, String email, String pw, Integer giftChance) {
     this.nickname = nickname;
     this.email = email;
     this.pw = pw;
+    this.giftChance = giftChance;
   }
 
   public void login() {
