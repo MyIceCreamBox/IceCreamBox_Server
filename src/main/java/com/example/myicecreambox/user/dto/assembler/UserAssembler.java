@@ -13,6 +13,10 @@ import java.util.regex.Pattern;
 public class UserAssembler {
 
   private static final Integer DEFAULT_GIFT_CHANCE_COUNT = 5;
+  // todo 공유페이지 url 픽스 후 리팩토링
+  private static final String DEFAULT_URL = "localhost:8080";
+  private static final String SHARE_PAGE_PATH = "/share";
+  private static final String SLASH = "/";
 
   public User toEntity(PostUserReq postUserReq, String pw) {
     return User.builder()
@@ -44,5 +48,9 @@ public class UserAssembler {
     Pattern pattern = Pattern.compile(regex);
     Matcher matcher = pattern.matcher(email);
     return matcher.matches();
+  }
+
+  public String toPersonalUrl(Long userIdx) {
+    return DEFAULT_URL + SHARE_PAGE_PATH + SLASH + userIdx;
   }
 }

@@ -23,4 +23,6 @@ public interface UserService {
   PostEmailRes checkEmail(PostEmailReq postEmailReq);
 
   IceCreamBoxRes getMyIceCreamBox(Long userIdx);
+
+  String shareUserLink(Long userIdx);
 }
