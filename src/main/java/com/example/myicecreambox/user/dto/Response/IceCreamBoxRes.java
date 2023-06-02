@@ -11,10 +11,12 @@ import java.util.stream.Collectors;
 @NoArgsConstructor
 public class IceCreamBoxRes {
   private List<ReceivedGiftRes> myIceCreams;
+  private String nickname;
 
-  public static IceCreamBoxRes toDto(List<Gift> receivedGifts) {
+  public static IceCreamBoxRes toDto(List<Gift> receivedGifts, String nickname) {
     IceCreamBoxRes iceCreamBoxRes = new IceCreamBoxRes();
     iceCreamBoxRes.myIceCreams = receivedGifts.stream().map(ReceivedGiftRes::toDto).collect(Collectors.toList());
+    iceCreamBoxRes.nickname = nickname;
     return iceCreamBoxRes;
   }
 }
