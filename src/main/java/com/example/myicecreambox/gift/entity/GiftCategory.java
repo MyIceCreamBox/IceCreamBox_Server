@@ -8,16 +8,15 @@ import java.util.Arrays;
 @Getter
 public enum GiftCategory {
 
-  // todo 아이스크림 벨류 픽스되면 변경
-  ICECREAM1("아이스크림1"),
-  ICECREAM2("아이스크림2"),
-  ICECREAM3("아이스크림3"),
-  ICECREAM4("아이스크림4"),
-  ICECREAM5("아이스크림5"),
-  ICECREAM6("아이스크림6"),
-  ICECREAM7("아이스크림7"),
-  ICECREAM8("아이스크림8"),
-  ICECREAM9("아이스크림9");
+  LOVE_BAR("이거먹으면나랑사귀는바"),
+  A_PLUS_BAR("이거먹으면에이쁠받는바"),
+  COLD_BAR("이거먹으면추워바"),
+  BLACK_BAR("흑마법사가만든저체온증바"),
+  PITCH_BAR("쿨복숭아쌍쌍바"),
+  CHOCOLATE_BAR("초콜릿태닝쌍쌍바"),
+  FISH_CON("물고기도반한에어콘"),
+  ORANGE_CON("여름이온지얼마나오렌지콘"),
+  HOT_CON("베리베리더워콘");
 
   private String name;
 
