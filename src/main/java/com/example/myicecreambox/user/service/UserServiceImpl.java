@@ -96,7 +96,7 @@ public class UserServiceImpl implements UserService {
     User user = userRepository.findByUserIdxAndIsEnable(userIdx, true).orElseThrow(UserNotFoundException::new);
     List<UserGift> userGifts = userGiftRepository.findByUserAndGiftType(user, GiftType.RECEIVED);
     List<Gift> receivedGifts = userGifts.stream().map(m -> giftRepository.findByGiftIdxAndIsEnable(m.getGift().getGiftIdx(), true)).toList();
-    return IceCreamBoxRes.toDto(receivedGifts);
+    return IceCreamBoxRes.toDto(receivedGifts, user.getNickname());
   }
 
   @Override
