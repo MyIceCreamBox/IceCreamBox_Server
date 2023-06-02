@@ -8,6 +8,7 @@ import com.example.myicecreambox.user.dto.Request.*;
 import com.example.myicecreambox.user.dto.Response.IceCreamBoxRes;
 import com.example.myicecreambox.user.service.UserService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.java.Log;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -59,6 +60,12 @@ public class UserController {
   @GetMapping("/my-page")
   public ResponseCustom<IceCreamBoxRes> getMyIceCreamBox(@IsLogin LoginStatus loginStatus) {
     return ResponseCustom.OK(userService.getMyIceCreamBox(loginStatus.getUserIdx()));
+  }
+
+  @Auth
+  @GetMapping("/share-link")
+  public ResponseCustom<String> shareUserLink(@IsLogin LoginStatus loginStatus) {
+    return ResponseCustom.OK(userService.shareUserLink(loginStatus.getUserIdx()));
   }
 
 
