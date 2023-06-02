@@ -16,7 +16,6 @@ public class ReceivedGiftRes {
     ReceivedGiftRes receivedGiftRes = new ReceivedGiftRes();
     receivedGiftRes.giftIdx = gift.getGiftIdx();
     receivedGiftRes.message = gift.getMessage();
-    // todo ImgKey -> ImgUrl 변경 로직 필요
     receivedGiftRes.iceCreamName = gift.getGiftCategory().getName();
     return receivedGiftRes;
   }
