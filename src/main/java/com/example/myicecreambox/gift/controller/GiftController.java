@@ -42,4 +42,5 @@ public class GiftController {
   public ResponseCustom<Integer> getMyGiftChance(@IsLogin LoginStatus loginStatus) {
     return ResponseCustom.OK(giftService.getMyGiftChance(loginStatus.getUserIdx()));
   }
+
 }

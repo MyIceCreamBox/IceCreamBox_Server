@@ -7,9 +7,6 @@ import com.example.myicecreambox.gift.dto.response.GiftsStatisticsRes;
 import com.example.myicecreambox.gift.entity.Gift;
 import com.example.myicecreambox.gift.entity.GiftType;
 import com.example.myicecreambox.gift.entity.UserGift;
-import com.example.myicecreambox.gift.exception.GiftIceCreamKeyMissingValueException;
-import com.example.myicecreambox.gift.exception.GiftMessageMissingValueException;
-import com.example.myicecreambox.gift.exception.GiftSenderNicknameMissingValueException;
 import com.example.myicecreambox.gift.repository.GiftRepository;
 import com.example.myicecreambox.gift.repository.UserGiftRepository;
 import com.example.myicecreambox.user.entity.User;
@@ -18,7 +15,8 @@ import com.example.myicecreambox.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.StringUtils;
+
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -72,4 +70,5 @@ public class GiftServiceImpl implements GiftService {
     User user = userRepository.findByUserIdxAndIsEnable(userIdx, true).orElseThrow(UserNotFoundException::new);
     return user.getGiftChance();
   }
+
 }

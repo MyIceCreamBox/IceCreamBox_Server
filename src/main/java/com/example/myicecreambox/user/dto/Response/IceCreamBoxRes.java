@@ -12,11 +12,13 @@ import java.util.stream.Collectors;
 public class IceCreamBoxRes {
   private List<ReceivedGiftRes> myIceCreams;
   private String nickname;
+  private Boolean isAfter;
 
-  public static IceCreamBoxRes toDto(List<Gift> receivedGifts, String nickname) {
+  public static IceCreamBoxRes toDto(List<Gift> receivedGifts, String nickname, Boolean isAfter) {
     IceCreamBoxRes iceCreamBoxRes = new IceCreamBoxRes();
     iceCreamBoxRes.myIceCreams = receivedGifts.stream().map(ReceivedGiftRes::toDto).collect(Collectors.toList());
     iceCreamBoxRes.nickname = nickname;
+    iceCreamBoxRes.isAfter = isAfter;
     return iceCreamBoxRes;
   }
 }
