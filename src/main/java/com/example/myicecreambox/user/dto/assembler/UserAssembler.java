@@ -5,6 +5,7 @@ import com.example.myicecreambox.user.entity.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDateTime;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -52,5 +53,11 @@ public class UserAssembler {
 
   public String toPersonalUrl(Long userIdx) {
     return DEFAULT_URL + GIFT_SEND_PATH + SLASH + userIdx;
+  }
+
+  public Boolean calOpenDate() {
+    LocalDateTime openDate = LocalDateTime.of(2023, 7, 1, 0, 0, 5);
+    LocalDateTime now = LocalDateTime.now();
+    return now.isAfter(openDate);
   }
 }

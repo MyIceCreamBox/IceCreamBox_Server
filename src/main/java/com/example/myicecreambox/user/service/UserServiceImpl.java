@@ -21,6 +21,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -96,7 +97,8 @@ public class UserServiceImpl implements UserService {
     User user = userRepository.findByUserIdxAndIsEnable(userIdx, true).orElseThrow(UserNotFoundException::new);
     List<UserGift> userGifts = userGiftRepository.findByUserAndGiftType(user, GiftType.RECEIVED);
     List<Gift> receivedGifts = userGifts.stream().map(m -> giftRepository.findByGiftIdxAndIsEnable(m.getGift().getGiftIdx(), true)).toList();
-    return IceCreamBoxRes.toDto(receivedGifts, user.getNickname());
+    return IceCreamBoxRes.toDto(receivedGifts, user.getNickname(),userAssembler.calOpenDate());
+
   }
 
   @Override

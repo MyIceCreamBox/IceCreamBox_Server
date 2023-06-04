@@ -11,4 +11,5 @@ public interface GiftService {
   GiftsStatisticsRes getMyGiftStatistics(Long userIdx);
 
   Integer getMyGiftChance(Long userIdx);
+
 }
