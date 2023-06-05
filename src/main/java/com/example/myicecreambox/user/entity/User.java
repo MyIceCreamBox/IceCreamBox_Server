@@ -4,6 +4,10 @@ import com.example.myicecreambox.global.entity.BaseEntity;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Type;
+
+import java.util.UUID;
 
 @Entity
 @NoArgsConstructor
@@ -25,12 +29,16 @@ public class User extends BaseEntity {
   private String pw;
   private Boolean loginStatus;
 
+  @GenericGenerator(name = "uuid2", strategy = "org.hibernate.id.UUIDGenerator")
+  private UUID uuid;
+
   @Builder
-  public User(String nickname, String email, String pw, Integer giftChance) {
+  public User(String nickname, String email, String pw, Integer giftChance, UUID uuid) {
     this.nickname = nickname;
     this.email = email;
     this.pw = pw;
     this.giftChance = giftChance;
+    this.uuid = uuid;
   }
 
   public void login() {

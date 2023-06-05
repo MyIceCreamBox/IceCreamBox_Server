@@ -18,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -31,9 +32,9 @@ public class GiftServiceImpl implements GiftService {
   // gift 보내기
   @Override
   @Transactional
-  public Long sendGift(SendGiftReq sendGiftReq, Long userIdx, Long receiverIdx) {
+  public Long sendGift(SendGiftReq sendGiftReq, Long userIdx, UUID receiverUuid) {
     User sender = userRepository.findByUserIdxAndIsEnable(userIdx, true).orElseThrow(UserNotFoundException::new);
-    User receiver = userRepository.findByUserIdxAndIsEnable(receiverIdx, true).orElseThrow(UserNotFoundException::new);
+    User receiver = userRepository.findByUuidAndIsEnable(receiverUuid, true).orElseThrow(UserNotFoundException::new);
 
     if(sender.getGiftChance() <= 0) throw new NotEnoughGiftChanceException();
 

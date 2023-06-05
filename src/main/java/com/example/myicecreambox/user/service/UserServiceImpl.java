@@ -104,7 +104,7 @@ public class UserServiceImpl implements UserService {
   @Override
   public String shareUserLink(Long userIdx) {
     User user = userRepository.findByUserIdxAndIsEnable(userIdx, true).orElseThrow(UserNotFoundException::new);
-    return userAssembler.toPersonalUrl(user.getUserIdx());
+    return userAssembler.toPersonalUrl(user.getUuid());
   }
 
 }
