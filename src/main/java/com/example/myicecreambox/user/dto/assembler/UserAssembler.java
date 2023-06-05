@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -25,6 +26,7 @@ public class UserAssembler {
             .pw(pw)
             .nickname(postUserReq.getNickname())
             .giftChance(DEFAULT_GIFT_CHANCE_COUNT)
+            .uuid(UUID.randomUUID())
             .build();
   }
 
@@ -51,8 +53,8 @@ public class UserAssembler {
     return matcher.matches();
   }
 
-  public String toPersonalUrl(Long userIdx) {
-    return DEFAULT_URL + GIFT_SEND_PATH + SLASH + userIdx;
+  public String toPersonalUrl(UUID uuid) {
+    return DEFAULT_URL + GIFT_SEND_PATH + SLASH + uuid;
   }
 
   public Boolean calOpenDate() {

@@ -10,6 +10,8 @@ import com.example.myicecreambox.global.resolver.LoginStatus;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.UUID;
+
 @RestController
 @RequestMapping(value = "/gifts")
 @RequiredArgsConstructor
@@ -18,11 +20,11 @@ public class GiftController {
   private final GiftService giftService;
 
   @Auth
-  @PostMapping("/send/{receiverIdx}")
+  @PostMapping("/send/{receiverUuid}")
   public ResponseCustom<Long> sendGift(@RequestBody SendGiftReq sendGiftReq,
-                                              @PathVariable(name = "receiverIdx") Long receiverIdx,
+                                              @PathVariable(name = "receiverUuid") UUID receiverUuid,
                                               @IsLogin LoginStatus loginStatus) {
-    return ResponseCustom.OK(giftService.sendGift(sendGiftReq, loginStatus.getUserIdx(), receiverIdx)); //receiver 추가
+    return ResponseCustom.OK(giftService.sendGift(sendGiftReq, loginStatus.getUserIdx(), receiverUuid)); //receiver 추가
   }
 
   @Auth
