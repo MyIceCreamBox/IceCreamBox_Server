@@ -74,6 +74,7 @@ public class UserController {
   @GetMapping("/test")
   public ResponseCustom<?> testController() {
     System.out.println("test");
+    System.out.println("ci/cd test");
     return ResponseCustom.OK("test");
   }
 }
