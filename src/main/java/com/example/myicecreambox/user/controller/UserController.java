@@ -77,6 +77,7 @@ public class UserController {
     System.out.println("ci/cd test");
     System.out.println("ci/cd test2");
     System.out.println("ci/cd test3");
+    System.out.println("ci/cd test4");
     return ResponseCustom.OK("test");
   }
 }
