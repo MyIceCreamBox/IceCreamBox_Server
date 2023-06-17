@@ -29,25 +29,6 @@ public class GiftServiceImpl implements GiftService {
   private final UserGiftRepository userGiftRepository;
   private final GiftAssembler giftAssembler;
 
-//  // gift 보내기
-//  @Override
-//  @Transactional
-//  public Long sendGift(SendGiftReq sendGiftReq, Long userIdx, UUID receiverUuid) {
-//    User sender = userRepository.findByUserIdxAndIsEnable(userIdx, true).orElseThrow(UserNotFoundException::new);
-//    User receiver = userRepository.findByUuidAndIsEnable(receiverUuid, true).orElseThrow(UserNotFoundException::new);
-//
-//    if(sender.getGiftChance() <= 0) throw new NotEnoughGiftChanceException();
-//
-//    Gift gift = new Gift();
-//    if (giftAssembler.checkGiftInfo(sendGiftReq)) {
-//      gift = giftRepository.save(giftAssembler.toEntity(sendGiftReq.getMessage(), sendGiftReq.getIceCreamName(), sendGiftReq.getSenderNickname()));
-//      userGiftRepository.save(UserGift.toEntity(sender, GiftType.SEND, gift));
-//      userGiftRepository.save(UserGift.toEntity(receiver, GiftType.RECEIVED, gift));
-//      giftAssembler.toUpdateGiftChance(sender, receiver);
-//    }
-//    return gift.getGiftIdx();
-//  }
-
   // gift 보내기
   @Override
   @Transactional
