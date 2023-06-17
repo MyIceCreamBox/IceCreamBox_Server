@@ -8,5 +8,6 @@ import lombok.NoArgsConstructor;
 public class SendGiftReq {
   private String iceCreamName;
   private String senderNickname;
+  private String receiverNickname;
   private String message;
 }
