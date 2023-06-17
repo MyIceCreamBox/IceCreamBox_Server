@@ -19,13 +19,21 @@ public class GiftController {
 
   private final GiftService giftService;
 
+//  @Auth
+//  @PostMapping("/send/{receiverUuid}")
+//  public ResponseCustom<Long> sendGift(@RequestBody SendGiftReq sendGiftReq,
+//                                              @PathVariable(name = "receiverUuid") UUID receiverUuid,
+//                                              @IsLogin LoginStatus loginStatus) {
+//    return ResponseCustom.OK(giftService.sendGift(sendGiftReq, loginStatus.getUserIdx(), receiverUuid)); //receiver 추가
+//  }
+
   @Auth
-  @PostMapping("/send/{receiverUuid}")
+  @PostMapping("/send")
   public ResponseCustom<Long> sendGift(@RequestBody SendGiftReq sendGiftReq,
-                                              @PathVariable(name = "receiverUuid") UUID receiverUuid,
-                                              @IsLogin LoginStatus loginStatus) {
-    return ResponseCustom.OK(giftService.sendGift(sendGiftReq, loginStatus.getUserIdx(), receiverUuid)); //receiver 추가
+                                       @IsLogin LoginStatus loginStatus) {
+    return ResponseCustom.OK(giftService.sendGift(sendGiftReq, loginStatus.getUserIdx())); //receiver 추가
   }
+
 
   @Auth
   @GetMapping("/count")
