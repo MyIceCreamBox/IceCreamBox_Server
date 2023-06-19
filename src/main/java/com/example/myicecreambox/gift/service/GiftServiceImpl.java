@@ -34,7 +34,6 @@ public class GiftServiceImpl implements GiftService {
   @Transactional
   public Long sendGift(SendGiftReq sendGiftReq, Long userIdx) {
     User sender = userRepository.findByUserIdxAndIsEnable(userIdx, true).orElseThrow(UserNotFoundException::new);
-//    User receiver = userRepository.findByUuidAndIsEnable(receiverUuid, true).orElseThrow(UserNotFoundException::new);
     User receiver = userRepository.findByNicknameAndIsEnable(sendGiftReq.getReceiverNickname(), true).orElseThrow(UserNotFoundException::new);
 
     if(sender.getGiftChance() <= 0) throw new NotEnoughGiftChanceException();

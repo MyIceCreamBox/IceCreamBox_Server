@@ -59,17 +59,4 @@ public class UserExceptionController {
         log.error(e.getMessage());
         return ResponseCustom.BAD_REQUEST(e.getMessage());
     }
-//    @ExceptionHandler(UserNicknameNotFoundException.class)
-//    public ResponseCustom<?> catchUserNicknameNotFoundException(UserNicknameNotFoundException e) {
-//        log.error(e.getMessage());
-
-//        return ResponseCustom.NOT_FOUND(e.getMessage());
-//    }
-//    @ExceptionHandler(AccessDeniedUserException.class)
-//    public ResponseCustom<?> catchAccessDeniedUserException(AccessDeniedUserException e) {
-//        log.error(e.getMessage());
-
-//        return ResponseCustom.FORBIDDEN(e.getMessage());
-
-//    }
 }
